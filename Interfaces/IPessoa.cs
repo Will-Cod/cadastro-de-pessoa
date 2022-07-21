@@ -1,0 +1,7 @@
+namespace Cadastro.Interfaces
+{
+    public interface IPessoa
+    {
+         float PagarImposto(float rendimento);
+    }
+}
