@@ -2,6 +2,6 @@ namespace Cadastro.Interfaces
 {
     public interface IPessoaFisica
     {
-         bool ValidarDataNascimento(DateTime DataNasc);
+         bool ValidarDataNascimento(string DataNasc);
     }
 }
