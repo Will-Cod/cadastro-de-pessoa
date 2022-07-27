@@ -17,8 +17,9 @@ namespace Cadastro.Classes
         {
             DateTime DataAtual = DateTime.Today;
             double anos = (DataAtual - DataNasc).TotalDays /365;
-            if(anos >= 18)
+            if(anos >= 18){
             return true;
+            }
             else
             return false;
         }

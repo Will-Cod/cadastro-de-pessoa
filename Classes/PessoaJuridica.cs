@@ -1,4 +1,5 @@
 using Cadastro.Interfaces;
+using System.Text.RegularExpressions;
 
 namespace Cadastro.Classes
 {
@@ -14,10 +15,18 @@ namespace Cadastro.Classes
         {
             throw new NotImplementedException();
         }
-
+        /*
+        xx.xxx.xxx/0001-xx
+        \d{}
+        */
         public bool ValidarCnpj(string cnpj)
         {
-            throw new NotImplementedException();
+           if(Regex.IsMatch(cnpj,@"(^(\d{2}.\d{3}.\d{3}/\d{4}-\d{2})$)")){
+            return true;
+           }
+           else{
+            return false;
+           }
         }
     }
 }
