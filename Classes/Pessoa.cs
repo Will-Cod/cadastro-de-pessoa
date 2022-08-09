@@ -6,7 +6,7 @@ namespace Cadastro.Classes
     {
         public string ?nome {get;set;}
         public Endereco ?endereco { get; set; }
-        public float ?rendimento { get; set; }
+        public float rendimento { get; set; }
         
         
         

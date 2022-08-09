@@ -123,10 +123,11 @@ do
                     Console.WriteLine($"Pessoa encontrada em nossos dados: ");
                         PessoaFisica novaPf = new PessoaFisica();
                         Endereco novoEnd = new Endereco();
+                        PessoaFisica metodoPf = new PessoaFisica();
                             novaPf.nome = "William";
-                            novaPf.DataNascimento = "13/12/1995";
+                            novaPf.DataNascimento = "13/12/2019";
                             novaPf.cpf = "12345678900";
-                            novaPf.rendimento = 500.0f;
+                            novaPf.rendimento = 1800.0f;
                             novoEnd.logradouro = "Dolores Alcaras Caldas";
                             novoEnd.numero = 8975;
                             novoEnd.complemento = "Apto 50";
@@ -138,7 +139,8 @@ do
                                 Data de Nascimento: {novaPf.DataNascimento}
                                 rendimento: {novaPf.rendimento}
                                 Endereço: {novaPf.endereco.logradouro}, {novaPf.endereco.numero}
-                                Maior de idade: {novaPf.ValidarDataNascimento(novaPf.DataNascimento)} 
+                                Maior de idade: {(novaPf.ValidarDataNascimento(novaPf.DataNascimento)? "Sim": "Não")} 
+                                Taxa de imposto: {metodoPf.PagarImposto(novaPf.rendimento).ToString("c")}
                                 ");
                                 Console.WriteLine($"Aperte 'Enter' para continuar.");
                                 Console.ReadLine();
@@ -204,7 +206,8 @@ do
                                 Nome: {novaPj.nome}
                                 Razão Social: {novaPj.RazaoSocial}
                                 CNPJ: {novaPj.cnpj}
-                                CNPJ é válido: {metodoPj.ValidarCnpj(novaPj.cnpj)}
+                                CNPJ é válido: {(metodoPj.ValidarCnpj(novaPj.cnpj)? "Sim": "Não")}
+                                Taxa de imposto: {metodoPj.PagarImposto(novaPj.rendimento).ToString("c")}
                                 ");
                                 Console.WriteLine($"Aperte 'Enter' para continuar.");
                                 Console.ReadLine();
@@ -222,6 +225,7 @@ do
             //Contador de carregando a aplicação
             Console.WriteLine($"Obrigado por utilizar nosso sistema!");
                 BarraCarregamento("Saindo ", 150);
+                Console.Clear();
             break;
         default:
             Console.WriteLine($"Opção inválida, por favor digite uma opção listada a cima!");
