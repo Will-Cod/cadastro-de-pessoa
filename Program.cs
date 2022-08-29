@@ -14,7 +14,6 @@ Console.ResetColor();
 BarraCarregamento("Carregando ", 150);
 
 List<PessoaFisica> listaPf = new List<PessoaFisica>();
-List<PessoaJuridica> listaPj = new List<PessoaJuridica>();
 
 string? opcao;
 do
@@ -74,6 +73,7 @@ do
                         Console.WriteLine($"Digite o nome da pessoa que deseja cadastrar:");
                         Console.ResetColor();
                         novaPf.nome = Console.ReadLine();
+                       
                         bool dataValida;
 
                         // Laço para verificação de data, caso esteja errada usuario fica nessa tela
@@ -132,7 +132,20 @@ do
                        }
                         novaPf.endereco = novoEnd;
 
-                        listaPf.Add(novaPf);
+                        //listaPf.Add(novaPf);
+                        
+                        
+                        using (StreamWriter sw = new StreamWriter($"{novaPf.nome}.txt"))//Cria/abre um arquivo txt. "using" enquanto tiver rodando a aplicação ele fica aberto, após ele fecha automatico.
+                        {
+                            sw.WriteLine($"{novaPf.nome}");//Adiciona uma informação no arquivo e pula uma linha
+                            sw.WriteLine($"{novaPf.DataNascimento}");
+                            sw.WriteLine($"{novaPf.cpf}");
+                            sw.WriteLine($"{novaPf.rendimento}");
+                            sw.WriteLine($"{novoEnd.logradouro}");
+                            sw.WriteLine($"{novoEnd.numero}");
+                            sw.WriteLine($"{novoEnd.complemento}");
+                            sw.WriteLine($"{novoEnd.EndComercial}");
+                        }
                         
                         Console.ForegroundColor = ConsoleColor.DarkGreen;
                         Console.WriteLine($"Cadastro realizado com sucesso!");
@@ -145,7 +158,7 @@ do
                         //Contador de carregando a aplicação
                         BarraCarregamento("Carregando ", 50);
                         Console.Clear();
-
+                        
                         if(listaPf.Count >0){
                             foreach(PessoaFisica cadaPessoa in listaPf){
                                 Console.Clear();
@@ -166,6 +179,20 @@ do
                             Console.WriteLine($"Lista vazia!");
                             Thread.Sleep(3000);
                         }
+                        
+
+                         using (StreamReader sr = new StreamReader($"William.txt"))//Lê um arquivo txt. "using" enquanto tiver rodando a aplicação ele fica aberto, após ele fecha automatico.
+                        {
+                            string linha;
+                            while((linha = sr.ReadLine()) != null){//Verificação se o arquivo está vazio
+                                Console.WriteLine($"{linha}");
+                                
+                            }   
+                        }
+                        Console.WriteLine($"Aperte 'Enter' para continuar...");
+                        Console.ReadLine();
+                        
+                        
                         break;
                     case "0":
                         Console.WriteLine($"Você realmente deseja sair? '0' para sim:");
@@ -272,7 +299,8 @@ do
                        }
                         novaPj.endereco = novoEnd;
 
-                        listaPj.Add(novaPj);
+
+                        metodoPj.inserir(novaPj);//Vai inserir os dados na lista
                         
                         Console.ForegroundColor = ConsoleColor.DarkGreen;
                         Console.WriteLine($"Cadastro realizado com sucesso!");
@@ -287,23 +315,20 @@ do
 
                     Console.WriteLine($"Pessoa encontrada em nossos dados: ");
 
-                        if(listaPj.Count >0){
-                            foreach(PessoaJuridica cadaPessoa in listaPj){
-                                Console.Clear();
+                    List<PessoaJuridica> listaPj = metodoPj.ler();
+                    foreach (PessoaJuridica cadaItem in listaPj)
+                    {
+                        Console.Clear();
                                 Console.WriteLine(@$"
-                                    Nome: {cadaPessoa.nome}
-                                    Razão Social: {cadaPessoa.RazaoSocial}
-                                    CNPJ: {cadaPessoa.cnpj}
-                                    CNPJ é válido: {cadaPessoa.cnpj}
-                                    Taxa de imposto: {metodoPj.PagarImposto(cadaPessoa.rendimento).ToString("c")}
+                                    Nome: {cadaItem.nome}
+                                    Razão Social: {cadaItem.RazaoSocial}
+                                    CNPJ: {cadaItem.cnpj}
+                                    CNPJ é válido: {cadaItem.cnpj}
+                                    Taxa de imposto: {metodoPj.PagarImposto(cadaItem.rendimento).ToString("c")}
                                     ");
                                 Console.WriteLine($"Aperte 'Enter' para continuar.");
                                 Console.ReadLine();
-                        }
-                        }else{
-                            Console.WriteLine($"Lista vazia!");
-                            Thread.Sleep(3000);
-                        }
+                    }
                         break;
                     case "0":
                         Console.WriteLine($"Você realmente deseja sair? '0' para sim:");

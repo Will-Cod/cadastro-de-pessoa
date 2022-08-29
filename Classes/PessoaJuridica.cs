@@ -8,7 +8,7 @@ namespace Cadastro.Classes
         public string ?cnpj { get; set; }
         public string ?RazaoSocial { get; set; }
         
-        
+        public string caminho { get; private set; } = "Database/PessoaJuridica.csv";
         
         
         public override float PagarImposto(float rendimento)
@@ -50,6 +50,33 @@ namespace Cadastro.Classes
                 }
             }
         return false;
-        }   
+        }
+                  //Processo de criar csv
+        public void inserir(PessoaJuridica pj){
+        
+        verificarPastaArquivo(caminho);
+
+        string[] pjString = {$"{pj.nome},{pj.cnpj},{pj.RazaoSocial}"};//Dados que vão ser salvos no arey
+        File.AppendAllLines(caminho, pjString);//Os dados salvos no arey estão sendo enviados para o arquivo
+        }  
+
+        public List<PessoaJuridica> ler(){
+            List<PessoaJuridica> listaPj = new List<PessoaJuridica>();//Lendo o arquivo
+
+            String[] linhas = File.ReadAllLines(caminho);//Arey que pega o caminho
+
+            foreach (string cadalinha in linhas){
+                string[] atributos = cadalinha.Split(",");//Separa cada atributo por ","
+
+                PessoaJuridica cadaPj = new PessoaJuridica();//Novo objeto
+                //Ordenação dos atributos que vão ser salvos
+                cadaPj.nome = atributos[0];
+                cadaPj.cnpj = atributos[1];
+                cadaPj.RazaoSocial = atributos[2];
+
+                listaPj.Add(cadaPj);//adiciona os dados na lista
+            }
+            return listaPj;
+        }
     }
 }
