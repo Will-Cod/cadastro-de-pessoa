@@ -60,19 +60,27 @@ namespace Cadastro.Classes
         File.AppendAllLines(caminho, pjString);//Os dados salvos no arey estão sendo enviados para o arquivo
         }  
 
-        public List<PessoaJuridica> ler(){
+        public List<PessoaJuridica> ler(){ //Criei a lista
             List<PessoaJuridica> listaPj = new List<PessoaJuridica>();//Lendo o arquivo
 
-            String[] linhas = File.ReadAllLines(caminho);//Arey que pega o caminho
+            String[] linhas = File.ReadAllLines(caminho);//Arey que le o arquivo e salva em "linhas"
 
             foreach (string cadalinha in linhas){
                 string[] atributos = cadalinha.Split(",");//Separa cada atributo por ","
 
                 PessoaJuridica cadaPj = new PessoaJuridica();//Novo objeto
                 //Ordenação dos atributos que vão ser salvos
+                Endereco cadaEnd = new Endereco();
+
                 cadaPj.nome = atributos[0];
                 cadaPj.cnpj = atributos[1];
                 cadaPj.RazaoSocial = atributos[2];
+                cadaPj.rendimento = float.Parse(atributos[3]);
+                cadaEnd.logradouro = atributos[4];
+                cadaEnd.numero = int.Parse(atributos[5]);
+                cadaEnd.complemento = atributos[6];
+                cadaEnd.EndComercial = bool.Parse(atributos[7]);
+                cadaPj.endereco = cadaEnd;
 
                 listaPj.Add(cadaPj);//adiciona os dados na lista
             }
